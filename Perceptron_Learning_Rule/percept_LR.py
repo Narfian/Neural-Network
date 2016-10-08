@@ -37,18 +37,18 @@ learningCycle = 100
 for i in xrange(learningCycle):
     pnum = i % len(x_data)
     x, y = x_data[pnum], y_data[pnum]
-    result = np.dot(w, x)
-    error = y - stepmaker(result)
+    hypothesis = np.dot(w, x)
+    error = y - stepmaker(hypothesis)
     w += error * x
     
     if i % 1 == 0:
-        # Get Mid Result
-        mid_result = np.dot(x_data,w)
-        # Print Mid Result
+        # Get Mid hypothesis
+        mid_hypothesis = np.dot(x_data,w)
+        # Print Mid hypothesis
         print "\nStep {}".format(i+1)
         print "[pNum]\t[  Dataset  ]\t[Hypothesis]\t[Result] [Real]"
         for j in xrange(len(x_data)):
-            print("  p{}.\t{}\t{:-.10f}\t    {}      {:1.0f}".format(j+1, x_data[j], mid_result[j], stepmaker(mid_result[j]), y_data[j]))
+            print("  p{}.\t{}\t{:-.10f}\t    {}      {:1.0f}".format(j+1, x_data[j], mid_hypothesis[j], stepmaker(mid_hypothesis[j]), y_data[j]))
         
 
         # To draw a line
@@ -103,7 +103,7 @@ for i in xrange(learningCycle):
 
         r_a = []
         for k in xrange(len(x_data)):
-        	r_a.append(stepmaker(mid_result[k]))
+        	r_a.append(stepmaker(mid_hypothesis[k]))
         if compare(r_a, y_data):
         	print '\n'
         	print ' ', '='*30
@@ -124,11 +124,11 @@ for i in xrange(learningCycle):
         
 
 
-# Get Total Result
-result = np.dot(x_data,w)
+# Get Total hypothesis
+hypothesis = np.dot(x_data,w)
 # Print Total Result
 print "\n* Total Result *"
 print "[pNum]\t[  Dataset  ]\t[Hypothesis]\t[Result] [Real]"
 for j in xrange(len(x_data)):
-     print("  p{}.\t{}\t{:-.10f}\t    {}      {:1.0f}".format(j+1, x_data[j], result[j], stepmaker(result[j]), y_data[j]))
+     print("  p{}.\t{}\t{:-.10f}\t    {}      {:1.0f}".format(j+1, x_data[j], hypothesis[j], stepmaker(hypothesis[j]), y_data[j]))
 raw_input('Press Enter to Shutdown')
