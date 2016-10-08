@@ -29,7 +29,6 @@ except:
 ## If there's no data, take exception
     x_data = np.array([[0, 0, 1.], [1, 0, 1.], [0, 1, 1.], [1, 1, 1.]])
     y_data = np.array([1, 1, 0, 1.])
-print y_data[0]
 ## Define Global Variables
 w = np.random.rand(3) % 1
 learningCycle = 100
