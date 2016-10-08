@@ -17,22 +17,26 @@ def quit_figure(event):
 stepmaker = lambda i: 0 if i < 0 else 1
 # Choose points' colors
 colorchk = lambda i: 'gs' if y_data[i]==1 else 'bs'
-# Compare List to stop at optimized step	
+# Compare List to stop at optimized step    
 compare = lambda x, y: \
 collections.Counter(x) == collections.Counter(y)
-
+try:
 ## Load Dataset from ./data.txt
-xy_data = np.loadtxt('data.txt', unpack=True)
-x_data = np.transpose(np.array(xy_data[0:-1]))
-y_data = np.transpose(np.array(xy_data[-1]))
-
+    xy_data = np.loadtxt('data.txt', unpack=True)
+    x_data = np.transpose(np.array(xy_data[0:-1]))
+    y_data = np.transpose(np.array(xy_data[-1]))
+except:
+## If there's no data, take exception
+    x_data = np.array([[0, 0, 1.], [1, 0, 1.], [0, 1, 1.], [1, 1, 1.]])
+    y_data = np.array([1, 1, 0, 1.])
+print y_data[0]
 ## Define Global Variables
 w = np.random.rand(3) % 1
 learningCycle = 100
 
 ## Training Session
 for i in xrange(learningCycle):
-	# Count the point
+    # Count the point
     pnum = i % len(x_data)
     x, y = x_data[pnum], y_data[pnum]
     # The key point of this code
@@ -93,17 +97,17 @@ for i in xrange(learningCycle):
         hStack = []
         # Stacking
         for k in xrange(len(x_data)):
-        	hStack.append(stepmaker(mid_hypothesis[k]))
+            hStack.append(stepmaker(mid_hypothesis[k]))
         # Compare to recognize optimization
         if compare(hStack, y_data):
-        	print '\n',' ','='*31,'\n',' ','=',' '*27,'='
-        	print ' ','=    Optimized at Step {}!\t='.format(i+1)
-        	print ' ','=',' '*27,'=\n',' ','='*31
-        	# Save the optimized plot to Local FS
-        	a = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
-        	plt.savefig('./' + a + '.png')
-        	plt.show()
-        	break
+            print '\n',' ','='*31,'\n',' ','=',' '*27,'='
+            print ' ','=    Optimized at Step {}!\t='.format(i+1)
+            print ' ','=',' '*27,'=\n',' ','='*31
+            # Save the optimized plot to Local FS
+            a = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+            plt.savefig('./' + a + '.png')
+            plt.show()
+            break
         plt.show()
 
 # Get Total hypothesis
