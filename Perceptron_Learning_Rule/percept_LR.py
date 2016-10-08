@@ -1,9 +1,15 @@
-import random
+#-*- coding: utf-8 -*-
+
+# random : Generating random number
+# collections : Compare list
+import random, collections, time
+# To Calculating
 import numpy as np
+# To Draw a plot
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
-
+# Enter for Next Step
 def quit_figure(event):
     if event.key == 'enter':
         plt.close(event.canvas.figure)
@@ -15,6 +21,9 @@ def stepmaker(i):
 	else:
 		return 1
 
+# Compare List to stop at optimized step
+compare = lambda x, y: collections.Counter(x) == collections.Counter(y)
+
 # Dataset Define from data.txt
 xy_data = np.loadtxt('data.txt', unpack=True)
 x_data = np.transpose(np.array(xy_data[0:-1]))
@@ -22,8 +31,7 @@ y_data = np.transpose(np.array(xy_data[-1]))
 
 # Variable Define
 w = np.random.rand(3) % 1
-
-learningCycle = 25
+learningCycle = 100
 
 # Training Session
 for i in xrange(learningCycle):
@@ -58,12 +66,10 @@ for i in xrange(learningCycle):
             x_data[2][0], x_data[2][1], 'bs',\
             x_data[3][0], x_data[3][1], 'gs')
         plt.gcf().canvas.set_window_title('Perceptron Learning Rule Simulator by Sun-Jin Park, InfosoftLab.')
-
-
-        #plt.axis([-.5, 1.5, -.5, 1.5])
+        
         plt.axis([-1, 2, -1, 2])
         
-        plt.suptitle('Perceptron Rule - Step {} of {}, p{} turn'.format(i+1, learningCycle ,pnum+1), fontsize=20)
+        plt.suptitle('Perceptron Rule - Step {}, p{} turn'.format(i+1, pnum+1), fontsize=20)
 
         plt.grid(True)
 
@@ -93,15 +99,27 @@ for i in xrange(learningCycle):
         plt.text(-.4, -0.98, 'Press \"Enter\" to go to the next step')
         
         cid = plt.gcf().canvas.mpl_connect('key_press_event', quit_figure)
+
+
+        r_a = []
+        for k in xrange(len(x_data)):
+        	r_a.append(stepmaker(mid_result[k]))
+        if compare(r_a, y_data):
+        	print '\n'
+        	print ' ', '='*30
+        	print ' ', '=', ' '*26, '='
+        	print ' ', '=    Optimized at Step {}!   ='.format(i+1)
+        	print ' ', '=', ' '*26, '='
+        	print ' ', '='*30
+        	a = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+        	plt.savefig('./' + a + '.png')
+        	plt.show()
+        	break
+
         plt.show()
+        
 
 
-        #plt.draw()
-        #plt.pause(1)
-        #raw_input("<Hit Enter to go to Next Step>")
-        #plt.close()
-
-        # Get Result
 
         
 
