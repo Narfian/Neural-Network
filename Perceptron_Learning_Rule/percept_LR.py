@@ -96,12 +96,9 @@ for i in xrange(learningCycle):
         	hStack.append(stepmaker(mid_hypothesis[k]))
         # Compare to recognize optimization
         if compare(hStack, y_data):
-        	print '\n'
-        	print ' ', '='*30
-        	print ' ', '=', ' '*26, '='
-        	print ' ', '=    Optimized at Step {}!   ='.format(i+1)
-        	print ' ', '=', ' '*26, '='
-        	print ' ', '='*30
+        	print '\n',' ','='*31,'\n',' ','=',' '*27,'='
+        	print ' ','=    Optimized at Step {}!\t='.format(i+1)
+        	print ' ','=',' '*27,'=\n',' ','='*31
         	# Save the optimized plot to Local FS
         	a = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
         	plt.savefig('./' + a + '.png')
