@@ -36,9 +36,9 @@ learningCycle = 100
 # Training Session
 for i in xrange(learningCycle):
     pnum = i % len(x_data)
-    x, hypothesis = x_data[pnum], y_data[pnum]
+    x, y = x_data[pnum], y_data[pnum]
     result = np.dot(w, x)
-    error = hypothesis - stepmaker(result)
+    error = y - stepmaker(result)
     w += error * x
     
     if i % 1 == 0:
